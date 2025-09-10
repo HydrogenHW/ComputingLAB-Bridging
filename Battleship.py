@@ -1,3 +1,7 @@
+#Code by Hydrogen_HW
+#还原侧身，以玄鸟之资缤纷此尘荏#
+
+#Imports
 from random import randint
 
 #Definition of Varibles
@@ -6,6 +10,7 @@ mpSurface:list[list[int]]=[[0 for j in range(10)] for i in range(10)]
 mpBelow: list[list[int]]=[[0 for j in range(10)] for i in range(10)]
 lengthTable={"Carrier":4,"Submarine":3}
 shipTable={"Carrier":'C',"Submarine":'S'}
+difficulty=1
 
 #Definition of Functions
 def isupper(s):
@@ -85,9 +90,8 @@ def isShipValid(x,y,depth,ori,type):
         if checkShip(x,y,depth,ori,type):
             placeShip(x,y,depth,ori,type)
             return True
-        else:
-            return False
     else:
+        print("Invalid ship input!")
         return False
 
 def isBotShipValid(x,y,depth,ori,type):
@@ -106,7 +110,6 @@ def isBotShipValid(x,y,depth,ori,type):
         else:
             return False
     else:
-        print("Invalid Coord!")
         return False
 
 def isCoordValid(x,y,depth):
@@ -121,14 +124,83 @@ def printMap():
         for j in range(0,10):
             print(mpSurface[i][j],end=" ")
         print("", end="\n")
-    print("Below\n")
+    print("\nBelow")
     for i in range(0,10):
         for j in range(0,10):
             print(mpBelow[i][j],end=" ")
         print("",end="\n")
 
+def findBot(x,y,depth):
+    if depth==0:
+        if isCoordValid(x+1, y, depth):
+            if mpBelow[x+1][y] != 0 and isupper(mpBelow[x+1][y]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x+1, y+1, depth):
+            if mpBelow[x+1][y+1] != 0 and isupper(mpBelow[x+1][y+1]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x+1, y-1, depth):
+            if mpBelow[x+1][y-1] != 0 and isupper(mpBelow[x+1][y-1]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x, y+1, depth):
+            if mpBelow[x][y+1] != 0 and isupper(mpBelow[x][y+1]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x, y-1, depth):
+            if mpBelow[x][y-1] != 0 and isupper(mpBelow[x][y-1]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x-1, y, depth):
+            if mpBelow[x-1][y] != 0 and isupper(mpBelow[x-1][y]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x-1, y+1, depth):
+            if mpBelow[x-1][y+1] != 0 and isupper(mpBelow[x-1][y+1]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x-1, y-1, depth):
+            if mpBelow[x-1][y-1] != 0 and isupper(mpBelow[x-1][y-1]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+    else:
+        if isCoordValid(x+1, y, depth):
+            if mpSurface[x+1][y] != 0 and isupper(mpSurface[x+1][y]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x+1, y+1, depth):
+            if mpSurface[x+1][y+1] != 0 and isupper(mpSurface[x+1][y+1]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x+1, y-1, depth):
+            if mpSurface[x+1][y-1] != 0 and isupper(mpSurface[x+1][y-1]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x, y+1, depth):
+            if mpSurface[x][y+1] != 0 and isupper(mpSurface[x][y+1]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x, y-1, depth):
+            if mpSurface[x][y-1] != 0 and isupper(mpSurface[x][y-1]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x-1, y, depth):
+            if mpSurface[x-1][y] != 0 and isupper(mpSurface[x-1][y]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x-1, y+1, depth):
+            if mpSurface[x-1][y+1] != 0 and isupper(mpSurface[x-1][y+1]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+        if isCoordValid(x-1, y-1, depth):
+            if mpSurface[x-1][y-1] != 0 and isupper(mpSurface[x-1][y-1]) == False:
+                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                return True
+    return False
+
 def getUserAttack():
-    x, y, depth = input("Input the attack coord(line,col,depth):").split()
+    x, y, depth = input("[System]Input the attack coord(line,col,depth):").split()
     x = int(x)
     y = int(y)
     depth = int(depth)
@@ -136,44 +208,50 @@ def getUserAttack():
         if isCoordValid(x, y, depth):
             if depth == 1:
                 # mpSurface[x][y]=1
-                if mpSurface[x][y] != 0 and isupper(mpSurface[x][y])==False:
-                    print(f"Hit@{x},{y},{depth}!")
-                    mpSurface[x][y] = 1
-                elif mpSurface[x][y] != 0 and isupper(mpSurface[x][y])==True:
-                    print("Watch Your Fire! You Hit Yourself!")
+                if mpSurface[x][y] != 0 and isupper(mpSurface[x][y])==False and mpSurface[x][y] != 'X' and mpSurface[x][y] != 'x':
+                    print(f"[System]Hit@{x},{y},{depth}!")
+                    mpSurface[x][y] = 'X'
+                elif mpSurface[x][y] != 0 and isupper(mpSurface[x][y])==True and mpSurface[x][y] != 'X' and mpSurface[x][y] != 'x':
+                    print("[System]Watch Your Fire! You Hit Yourself!")
                 else:
-                    print("Attack Miss!")
+                    print("[User]Attack Miss!")
             else:
                 #mpBelow[x][y] = 1
-                if mpBelow[x][y] != 0 and isupper(mpBelow[x][y])==False:
-                    print(f"Hit@{x},{y},{depth}!")
-                    mpBelow[x][y] = 1
-                elif mpBelow[x][y] != 0 and isupper(mpBelow[x][y])==True:
-                    print("Watch Your Fire! You Hit Yourself!")
+                if mpBelow[x][y] != 0 and isupper(mpBelow[x][y])==False and mpBelow[x][y] != 'X' and mpBelow[x][y] != 'x':
+                    print(f"[System]Hit@{x},{y},{depth}!")
+                    mpBelow[x][y] = 'X'
+                elif mpBelow[x][y] != 0 and isupper(mpBelow[x][y])==True and mpBelow[x][y] != 'X' and mpBelow[x][y] != 'x':
+                    print("[System]Watch Your Fire! You Hit Yourself!")
                 else:
-                    print("Attack Miss!")
+                    print("[User]Attack Miss!")
+                    if not findBot(x, y, depth):
+                        print("[System]Nothing Found!")
             break
         else:
-            x, y, depth = input("Input the coord(line,col,depth):").split()
+            x, y, depth = input("[System]Input the coord(line,col,depth):").split()
             x = int(x)
             y = int(y)
             depth = int(depth)
 
 # noinspection PyShadowingNames
 def getInitInput():
-    print("--------========####BATTLESHIP_GAME####========--------")
-    x,y,depth,ori =input('Please enter coord of Carrier (line, col, depth) and orientation(vertical/horizontal): ').split()
+    print("--------========================####BATTLESHIP_GAME####========================--------")
+
+    difficulty=int(input("[System]Input the difficulty level(1-114):"))
+
+    x,y,depth,ori =input('[System]Please enter coord of Carrier (line, col, depth) \nand orientation(vertical/horizontal): ').split()
     while True:
         if isShipValid(x, y, depth, ori,"Carrier"):
-            print("Carrier placed")
+            print("[User]Carrier placed")
             break
-        x,y,depth,ori = input('Please enter coord of Carrier (line, col, depth) and orientation(vertical/horizontal): ').split()
-    x,y,depth,ori = input('Please enter coord of Carrier (line, col, depth) and orientation(vertical/horizontal): ').split()
+        x,y,depth,ori = input('[System]Please enter coord of Carrier (line, col, depth) \nand orientation(vertical/horizontal): ').split()
+    x,y,depth,ori = input('[System]Please enter coord of Submarine (line, col, depth) \nand orientation(vertical/horizontal): ').split()
     while True:
         if isShipValid(x, y, depth, ori, "Submarine"):
-            print("Submarine placed")
+            print("[User]Submarine placed")
             break
-        x,y,depth,ori = input('Please enter coord of Carrier (line, col, depth) and orientation(vertical/horizontal): ').split()
+        x,y,depth,ori = input('[System]Please enter coord of Carrier (line, col, depth) \nand orientation(vertical/horizontal): ').split()
+    return difficulty
 
 def checkMap():
     flagBotCarrier,flagBotSubmarine,flagUserCarrier,flagUserSubmarine=False,False,False,False
@@ -199,28 +277,26 @@ def checkMap():
                 flagBotSubmarine=True
 
     if flagBotCarrier==False and isPrinted[0]==False:
-        print("Bot Carrier has sunk")
-        isPrinted[0]=False
+        print("[System]Bot Carrier has sunk")
+        isPrinted[0]=True
     elif flagBotSubmarine==False and isPrinted[1]==False:
-        print("Bot Submarine has sunk")
-        isPrinted[1]=False
+        print("[System]Bot Submarine has sunk")
+        isPrinted[1]=True
     elif flagUserCarrier==False and isPrinted[2]==False:
-        isPrinted[2]=False
-        print("User Carrier has sunk")
+        isPrinted[2]=True
+        print("[System]User Carrier has sunk")
     elif flagUserSubmarine==False and isPrinted[3]==False:
-        isPrinted[3]=False
-        print("User Submarine has sunk")
+        isPrinted[3]=True
+        print("[System]User Submarine has sunk")
     if flagBotCarrier==False and flagBotSubmarine==False:
-        print("You win!")
         return True
     if flagUserCarrier==False and flagUserSubmarine==False:
-        print("You lose!")
         return False
     return None
 
 def getBotShip():
     print("[Bot]Placing ship")
-    x, y, depth = randint(0,9),randint(0,9),randint(0,1)
+    x, y, depth = randint(0,9),randint(0,9),1
     ori=randint(0,1)
     if ori==0:
         ori="vertical"
@@ -230,7 +306,7 @@ def getBotShip():
         if isBotShipValid(x, y, depth, ori, "Carrier"):
             print("[Bot]Carrier placed")
             break
-        x, y, depth = randint(0, 9), randint(0, 9), randint(0, 1)
+        x, y, depth = randint(0, 9), randint(0, 9), 1
         ori = randint(0, 1)
         if ori == 0:
             ori = "vertical"
@@ -254,37 +330,77 @@ def getBotShip():
             ori = "horizontal"
 
 def getBotAttack():
-    x, y, depth = randint(0,9),randint(0,9),randint(0,1)
+    x,y,depth = 0,0,0
+    forceHit=randint(0,114)
+    if forceHit<=difficulty:
+        print("[Bot]Hacking")
+        depth=randint(0,1)
+        if depth==0:
+            for i in range(0,10):
+                f=True
+                for j in range(0,10):
+                    if mpBelow[i][j]=="C" or mpBelow[i][j]=="S":
+                        x=i
+                        y=j
+                        f=False
+                        break
+                if f==False:
+                    break
+        else:
+            for i in range(0,10):
+                f=True
+                for j in range(0,10):
+                    if mpSurface[i][j]=="C" or mpSurface[i][j]=="S":
+                        x=i
+                        y=j
+                        f=False
+                        break
+                if f==False:
+                    break
+    else:
+        x, y, depth = randint(0,9),randint(0,9),randint(0,1)
+    if x==0 and y==0:
+        print("[Bot]Fail to hack :-(")
+        x, y, depth = randint(0, 9), randint(0, 9), randint(0, 1)
     while True:
         if isCoordValid(x, y, depth):
             if depth == 1:
                 # mpSurface[x][y]=1
-                if mpSurface[x][y] != 0 and isupper(mpSurface[x][y]) == True:
+                if mpSurface[x][y] != 0 and isupper(mpSurface[x][y]) == True and mpSurface[x][y] != 'X' and mpSurface[x][y] != 'x':
                     print(f"[Bot]Hit@{x},{y},{depth}!")
-                    mpSurface[x][y] = 1
-                elif mpSurface[x][y] != 0 and isupper(mpSurface[x][y]) == False:
+                    mpSurface[x][y] = 'x'
+                elif mpSurface[x][y] != 0 and isupper(mpSurface[x][y]) == False and mpSurface[x][y] != 'X' and mpSurface[x][y] != 'x':
                     print("[Bot]Watch Your Fire! You Hit Yourself!")
                 else:
-                    print("[Bot]Attack Miss!")
+                    print(f"[Bot]Attack Miss @ {x},{y},{depth}!")
             else:
                 # mpBelow[x][y] = 1
-                if mpBelow[x][y] != 0 and isupper(mpBelow[x][y]) == True:
+                if mpBelow[x][y] != 0 and isupper(mpBelow[x][y]) == True and mpBelow[x][y] != 'X' and mpBelow[x][y] != 'x':
                     print(f"[Bot]Hit@{x},{y},{depth}!")
-                    mpBelow[x][y] = 1
-                elif mpBelow[x][y] != 0 and isupper(mpBelow[x][y]) == False:
+                    mpBelow[x][y] = 'x'
+                elif mpBelow[x][y] != 0 and isupper(mpBelow[x][y]) == False and mpBelow[x][y] != 'X' and mpBelow[x][y] != 'x':
                     print("[Bot]Watch Your Fire! You Hit Yourself!")
                 else:
-                    print("[Bot]Attack Miss!")
+                    print(f"[Bot]Attack Miss @ {x},{y},{depth}!")
             break
         else:
             x, y, depth = randint(0,9),randint(0,9),randint(0,1)
 
 #Main programme starts here
-getInitInput()
-getBotShip()
+difficulty=getInitInput()
+print("[User]This is your map")
 printMap()
+getBotShip()
+# printMap()
 while True:
     getUserAttack()
     getBotAttack()
-    if checkMap() is not None:
+    res=checkMap()
+    if res is True:
+        printMap()
+        print("[System]You win!")
+        break
+    if res is False:
+        printMap()
+        print("[System]You lose!")
         break
