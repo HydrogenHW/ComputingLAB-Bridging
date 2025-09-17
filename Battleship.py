@@ -134,68 +134,68 @@ def findBot(x,y,depth):
     if depth==0:
         if isCoordValid(x+1, y, depth):
             if mpBelow[x+1][y] in ['c','s'] and isupper(mpBelow[x+1][y]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x+1, y+1, depth):
             if mpBelow[x+1][y+1] in ['c','s'] and isupper(mpBelow[x+1][y+1]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x+1, y-1, depth):
             if mpBelow[x+1][y-1] in ['c','s'] and isupper(mpBelow[x+1][y-1]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x, y+1, depth):
             if mpBelow[x][y+1] in ['c','s'] and isupper(mpBelow[x][y+1]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x, y-1, depth):
             if mpBelow[x][y-1] in ['c','s'] and isupper(mpBelow[x][y-1]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x-1, y, depth):
             if mpBelow[x-1][y] in ['c','s'] and isupper(mpBelow[x-1][y]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x-1, y+1, depth):
             if mpBelow[x-1][y+1] in ['c','s'] and isupper(mpBelow[x-1][y+1]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x-1, y-1, depth):
             if mpBelow[x-1][y-1] in ['c','s'] and isupper(mpBelow[x-1][y-1]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
     else:
         if isCoordValid(x+1, y, depth):
             if mpSurface[x+1][y] in ['c','s'] and isupper(mpSurface[x+1][y]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x+1, y+1, depth):
             if mpSurface[x+1][y+1] in ['c','s'] and isupper(mpSurface[x+1][y+1]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x+1, y-1, depth):
             if mpSurface[x+1][y-1] in ['c','s'] and isupper(mpSurface[x+1][y-1]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x, y+1, depth):
             if mpSurface[x][y+1] in ['c','s'] and isupper(mpSurface[x][y+1]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x, y-1, depth):
             if mpSurface[x][y-1] in ['c','s'] and isupper(mpSurface[x][y-1]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x-1, y, depth):
             if mpSurface[x-1][y] in ['c','s'] and isupper(mpSurface[x-1][y]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x-1, y+1, depth):
             if mpSurface[x-1][y+1] in ['c','s'] and isupper(mpSurface[x-1][y+1]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
         if isCoordValid(x-1, y-1, depth):
             if mpSurface[x-1][y-1] in ['c','s'] and isupper(mpSurface[x-1][y-1]) == False:
-                print(f"[System]Enemy detected @ {x},{y},{depth}!")
+                print(f"[System]Enemy detected around {x},{y},{depth}!")
                 return True
     return False
 
@@ -209,7 +209,7 @@ def getUserAttack():
             if depth == 1:
                 # mpSurface[x][y]=1
                 if mpSurface[x][y] != 0 and isupper(mpSurface[x][y])==False and mpSurface[x][y] != 'X' and mpSurface[x][y] != 'x':
-                    print(f"[System]Hit@{x},{y},{depth}!")
+                    print(f"[System]Hit @ {x},{y},{depth}!")
                     mpSurface[x][y] = 'X'
                 elif mpSurface[x][y] != 0 and isupper(mpSurface[x][y])==True and mpSurface[x][y] != 'X' and mpSurface[x][y] != 'x':
                     print("[System]Watch Your Fire! You Hit Yourself!")
@@ -230,7 +230,7 @@ def getUserAttack():
                         print("[System]Nothing Found!")
             break
         else:
-            x, y, depth = input("[System]Input the coord(line,col,depth):").split()
+            x, y, depth = input("[System]Invalid value! Input the coord again(line,col,depth):").split()
             x = int(x)
             y = int(y)
             depth = int(depth)
